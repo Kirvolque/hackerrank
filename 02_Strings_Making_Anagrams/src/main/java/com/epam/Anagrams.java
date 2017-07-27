@@ -6,23 +6,23 @@ import java.util.*;
 
 public class Anagrams {
     public static int numberNeeded(String first, String second) {
+
         HashMap<Character, Integer> map = new HashMap<>();
         char c;
-        for (int i = 0; i < first.length(); i++) {
+        for (int i = 0; i < first.length(); i++){
             c = first.charAt(i);
             if (map.get(c) != null) {
                 map.put(c, map.get(c) + 1);
-            } else {
+            } else{
                 map.put(c, 1);
             }
-
         }
-        for (int i = 0; i < second.length(); i++) {
+        for (int i = 0; i < second.length(); i++){
             c = second.charAt(i);
             if (map.get(c) != null) {
                 map.put(c, map.get(c) - 1);
             } else {
-                map.put(c, 1);
+                map.put(c, -1);
             }
         }
 
