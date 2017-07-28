@@ -11,7 +11,7 @@ public class Anagrams {
         char c;
         for (int i = 0; i < first.length(); i++){
             c = first.charAt(i);
-            if (map.get(c) != null) {
+            if (map.containsKey(c)) {
                 map.put(c, map.get(c) + 1);
             } else{
                 map.put(c, 1);
@@ -19,7 +19,7 @@ public class Anagrams {
         }
         for (int i = 0; i < second.length(); i++){
             c = second.charAt(i);
-            if (map.get(c) != null) {
+            if (map.containsKey(c)) {
                 map.put(c, map.get(c) - 1);
             } else {
                 map.put(c, -1);
