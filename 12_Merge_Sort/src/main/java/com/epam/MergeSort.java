@@ -36,5 +36,27 @@ public class MergeSort {
         }
     }
 
+    private static void mergeSortUp(int[] data, int size, int[] additional) {
+        int mid;
+        int endExclusive;
+        for(int frameLength = 1; frameLength <= size; frameLength *= 2 ){
+            for(int startInclusive = 0; startInclusive  < size; startInclusive += 2*frameLength){
+                endExclusive = startInclusive + frameLength;
+
+                if (endExclusive >= size) {
+                    mid = startInclusive + (size - startInclusive) / 2;
+                    merge(data, startInclusive, mid, size, additional);
+                }
+                else {
+                    mid = startInclusive + frameLength / 2;
+                    merge(data, startInclusive, mid, endExclusive, additional);
+                }
+
+                if (endExclusive < size - 1 && startInclusive + 2*frameLength >= size){
+                    merge(data, 0, endExclusive, size, additional);
+                }
+            }
+        }
+    }
 
 }
