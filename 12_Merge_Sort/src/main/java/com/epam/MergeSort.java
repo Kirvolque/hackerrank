@@ -20,8 +20,9 @@ public class MergeSort {
 
 
     public static void sort(int[] data, int size) {
-
+        mergeSortUp(data, size, new int[size]);
     }
+    
 
     private static void merge(int[] data, int startInclusive, int mid, int endExclusive, int[] additional){
         System.arraycopy(data, startInclusive, additional, startInclusive, endExclusive - startInclusive);
