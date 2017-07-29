@@ -4,39 +4,28 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Queues {
+
+
     public static class MyQueue<T> {
         Stack<T> stackNewestOnTop = new Stack<T>();
         Stack<T> stackOldestOnTop = new Stack<T>();
-        Boolean queueReversed = false;
 
         public void enqueue(T value) { // Push onto newest stack
-            if (queueReversed) oldestToNewest();
             stackNewestOnTop.push(value);
         }
 
         public T peek() {
-            if (!queueReversed) {
-                newestToOldest();
-                return stackOldestOnTop.peek();
-            }
+            if(stackOldestOnTop.empty()) newestToOldest();
             return stackOldestOnTop.peek();
         }
 
         public T dequeue() {
-            if (!queueReversed) newestToOldest();
+            if(stackOldestOnTop.empty()) newestToOldest();
             return stackOldestOnTop.pop();
 
         }
 
-        private void oldestToNewest() {
-            queueReversed = false;
-            while (!stackOldestOnTop.empty()) {
-                stackNewestOnTop.push(stackOldestOnTop.pop());
-            }
-        }
-
         private void newestToOldest() {
-            queueReversed = true;
             while (!stackNewestOnTop.empty()) {
                 stackOldestOnTop.push(stackNewestOnTop.pop());
             }
