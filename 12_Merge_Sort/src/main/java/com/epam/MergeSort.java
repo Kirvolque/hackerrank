@@ -2,7 +2,11 @@ package com.epam;
 
 import java.util.Scanner;
 
+import static com.epam.MergeSort.merge;
+
 public class MergeSort {
+
+    public static int swaps;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -18,44 +22,44 @@ public class MergeSort {
 
     }
 
-
     public static void sort(int[] data, int size) {
-        mergeSortUp(data, size, new int[size]);
+        swaps = 0;
+        mergeSortDown(data, 0, size, new int[size]);
+        System.out.println(swaps);
     }
-    
+
+    private static void mergeSortDown(int[] data, int startInclusive, int endExclusive, int[] additional) {
+
+        final int length = endExclusive - startInclusive;
+        if (length <= 1) {
+            return;
+        }
+
+        final int mid = startInclusive + length / 2;
+        mergeSortDown(data, startInclusive, mid, additional);
+        mergeSortDown(data, mid, endExclusive, additional);
+
+        merge(data, startInclusive, mid, endExclusive, additional);
+    }
 
     private static void merge(int[] data, int startInclusive, int mid, int endExclusive, int[] additional){
         System.arraycopy(data, startInclusive, additional, startInclusive, endExclusive - startInclusive);
-
         int i = startInclusive;
         int j = mid;
         for (int k = startInclusive; k < endExclusive; k++) {
-            if (i >= mid) data[k] = additional[j++];
-            else if (j >= endExclusive) data[k] = additional[i++];
-            else if (additional[i] < additional[j]) data[k] = additional[i++];
-            else data[k] = additional[j++];
-        }
-    }
+            if (i >= mid){
+                data[k] = additional[j++];
+            }
+            else if (j >= endExclusive){
+                data[k] = additional[i++];
 
-    private static void mergeSortUp(int[] data, int size, int[] additional) {
-        int mid;
-        int endExclusive;
-        for(int frameLength = 1; frameLength <= size; frameLength *= 2 ){
-            for(int startInclusive = 0; startInclusive  < size; startInclusive += 2*frameLength){
-                endExclusive = startInclusive + frameLength;
-
-                if (endExclusive >= size) {
-                    mid = startInclusive + (size - startInclusive) / 2;
-                    merge(data, startInclusive, mid, size, additional);
-                }
-                else {
-                    mid = startInclusive + frameLength / 2;
-                    merge(data, startInclusive, mid, endExclusive, additional);
-                }
-
-                if (endExclusive < size - 1 && startInclusive + 2*frameLength >= size){
-                    merge(data, 0, endExclusive, size, additional);
-                }
+            }
+            else if (additional[i] < additional[j]){
+                data[k] = additional[i++];
+            }
+            else {
+                data[k] = additional[j++];
+                swaps += mid - i;
             }
         }
     }
