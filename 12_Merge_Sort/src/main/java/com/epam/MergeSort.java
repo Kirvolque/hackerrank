@@ -1,24 +1,27 @@
 package com.epam;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 
-import static com.epam.MergeSort.merge;
+//import static com.epam.MergeSort.merge;
 
 public class MergeSort {
 
     public static int swaps;
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int t = in.nextInt();
-        for(int a0 = 0; a0 < t; a0++){
-            int n = in.nextInt();
-            int arr[] = new int[n];
-            for(int arr_i=0; arr_i < n; arr_i++){
-                arr[arr_i] = in.nextInt();
-            }
-            sort(arr, n);
-        }
+//        Scanner in = new Scanner(System.in);
+//        int t = in.nextInt();
+//        for(int a0 = 0; a0 < t; a0++){
+//            int n = in.nextInt();
+//            int arr[] = new int[n];
+//            for(int arr_i=0; arr_i < n; arr_i++){
+//                arr[arr_i] = in.nextInt();
+//            }
+//            sort(arr, n);
+//        }
+
+        int [] arr = {1, 1 ,1, 2, 2};
+        sort (arr, 5);
 
     }
 
@@ -54,12 +57,12 @@ public class MergeSort {
                 data[k] = additional[i++];
 
             }
-            else if (additional[i] < additional[j]){
+            else if (additional[i] <= additional[j]){
                 data[k] = additional[i++];
             }
             else {
-                data[k] = additional[j++];
                 swaps += mid - i;
+                data[k] = additional[j++];
             }
         }
     }
