@@ -8,10 +8,11 @@ public class Staircase {
 
     public static int calculateWaysOfClimpbing(int n){
         if (n < 0) return 0;
-        if (n == 0) return 0;
+        if (n == 0) return 1;
         if (n == 1) return 1;
+
         int sum = 0;
-        for (int k = 0; k <= 3; k++){
+        for (int k = 1; k <= 3; k++){
             sum += calculateWaysOfClimpbing(n - k);
         }
         return sum;
