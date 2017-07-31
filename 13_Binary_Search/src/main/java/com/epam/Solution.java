@@ -1,19 +1,34 @@
 package com.epam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Solution implements Comparator<Solution.Flavor>{
 
+    static ArrayList<Flavor> flavors;
 
-    public int binarySearch(ArrayList<Flavor> data, int value) {
+    public static int pull (int indexOfFirst, int cost){
+        int result = binarySearch(flavors, cost);
+        if (result < 0) return -1;
+        int i = result;
+        while (i >= 0 && flavors.get(i).cost == cost && indexOfFirst < flavors.get(i).id){
+            i -= 1;
+        }
+        return flavors.get(i + 1).id;
+
+    }
+
+    public static int findSecond (int money, int cost, int indexOfFirst) {
+        int costOfSecond = money - cost;
+        return pull(indexOfFirst, costOfSecond);
+    }
+
+
+    public static int binarySearch(ArrayList<Flavor> data, int value) {
         return binarySearch(data, value, 0, data.size());
     }
 
 
-    private int binarySearch(ArrayList<Flavor> data, int value, int startInclusive, int endExclusive) {
+    private static int binarySearch(ArrayList<Flavor> data, int value, int startInclusive, int endExclusive) {
         int frameLength = endExclusive - startInclusive;
         while (frameLength > 1) {
 
@@ -61,11 +76,23 @@ public class Solution implements Comparator<Solution.Flavor>{
             int m = in.nextInt();
             int n = in.nextInt();
             int a[] = new int[n];
-            List<Flavor> flavors = new ArrayList<>();
+            flavors = new ArrayList<>();
+            int cost;
             for(int i=0; i < n; i++){
-                flavors.add(new Flavor(n, in.nextInt()));
+                cost = in.nextInt();
+                a[i] = cost;
+                flavors.add(new Flavor(i, cost));
             }
             flavors.sort(new Solution());
+            int result = 0;
+            int k;
+            for (k=0; k < n-1; k++){
+                result = findSecond(m, a[k], k);
+                if (result > 0) break;
+            }
+            result += 1;
+            System.out.println(k + 1 + " " + result);
+
         }
     }
 }
