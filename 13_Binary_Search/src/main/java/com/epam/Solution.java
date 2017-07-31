@@ -18,6 +18,7 @@ public class Solution implements Comparator<Solution.Flavor>{
     }
 
     public static int findSecond (int money, int cost, int indexOfFirst) {
+        if (cost >= money) return -1;
         int costOfSecond = money - cost;
         return pull(indexOfFirst, costOfSecond);
     }
@@ -90,8 +91,7 @@ public class Solution implements Comparator<Solution.Flavor>{
                 result = findSecond(m, a[k], k);
                 if (result > 0) break;
             }
-            result += 1;
-            System.out.println(k + 1 + " " + result);
+            System.out.println(k + " " + result);
 
         }
     }
