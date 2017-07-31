@@ -7,6 +7,36 @@ import java.util.Scanner;
 
 public class Solution implements Comparator<Solution.Flavor>{
 
+
+    public int binarySearch(ArrayList<Flavor> data, int value) {
+        return binarySearch(data, value, 0, data.size());
+    }
+
+
+    private int binarySearch(ArrayList<Flavor> data, int value, int startInclusive, int endExclusive) {
+        int frameLength = endExclusive - startInclusive;
+        while (frameLength > 1) {
+
+            final int mid = startInclusive + frameLength / 2;
+
+            if (data.get(mid).cost == value) {
+                return mid;
+            } else if (data.get(mid).cost > value) {
+                endExclusive = mid;
+            } else if (data.get(mid).cost < value) {
+                startInclusive = mid + 1;
+            }
+            frameLength = endExclusive - startInclusive;
+        }
+
+        if (data.get(startInclusive).cost == value) {
+            return startInclusive;
+        } else if (data.get(startInclusive).cost < value) {
+            return -(startInclusive + 1) - 1;
+        }
+        return -(startInclusive - 1) - 1;
+    }
+
     @Override
     public int compare(Flavor o1, Flavor o2) {
         if(o1.cost != o2.cost) return Integer.compare(o1.cost, o2.cost);
