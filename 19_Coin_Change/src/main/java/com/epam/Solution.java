@@ -6,6 +6,7 @@ public class Solution {
 
     public static long makeChange(int[] coins, int money) {
         long[] d = new long[money + 1];
+        d[0] = 1L;
         for(int coin : coins) {
             for(int j = coin; j < d.length; j++) {
                 d[j] += d[j - coin];
