@@ -18,7 +18,7 @@ public class Solution implements Comparator<Solution.Flavor>{
     }
 
     public static int findSecond (int money, int cost, int indexOfFirst) {
-        if (cost >= money) return -1;
+        if (cost >= money) return -1;gh
         int costOfSecond = money - cost;
         return pull(indexOfFirst, costOfSecond);
     }
