@@ -13,8 +13,14 @@ public class Solution {
         for(int a0 = 0; a0 < p; a0++){
             answer = "Prime";
             int n = in.nextInt();
-
+            if (n == 1){
+                answer = "Not prime";
+            }
             for (int l = 2; l <= Math.sqrt(n); l++){
+
+                if (n >= 2 && n <=3){
+                    break;
+                }
                 if (n % l == 0){
                     answer = "Not prime";
                     break;
@@ -22,7 +28,5 @@ public class Solution {
             }
             System.out.println(answer);
         }
-
-
     }
 }
