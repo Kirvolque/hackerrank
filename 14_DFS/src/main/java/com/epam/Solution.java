@@ -5,32 +5,33 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class Solution {
+
     static int m;
     static int n;
     static int sizeOfRegion = 0;
     static int[][] matrix;
+    static HashSet<Point> points;
 
-    public static int sizeOfRegion(int x, int y, HashSet<Point> points){
-        if (x < 0|| x >= m || y < 0 || y >= n){
-            return 0;
-        }
-        if (points.contains(new Point (x, y))){
-            return 0;
-        }
-        if (matrix[x][y] != 0){
+
+    public static void sizeOfRegion(int x, int y){
+        if (x >= 0 && x < m && y >= 0 && y < n
+                && matrix[y][x] != 0
+                &&!points.contains(new Point (x, y))){
+
             points.add(new Point(x, y));
 
-            sizeOfRegion(x, y - 1, points);
-            sizeOfRegion(x, y + 1, points);
-            sizeOfRegion(x - 1, y - 1, points);
-            sizeOfRegion(x - 1, y, points);
-            sizeOfRegion(x - 1, y + 1, points);
-            sizeOfRegion(x + 1, y - 1, points);
-            sizeOfRegion(x + 1, y, points);
-            sizeOfRegion(x + 1, y + 1, points);
+            sizeOfRegion(x, y - 1);
+            sizeOfRegion(x, y + 1);
+
+            sizeOfRegion(x - 1, y - 1);
+            sizeOfRegion(x - 1, y);
+            sizeOfRegion(x - 1, y + 1);
+
+            sizeOfRegion(x + 1, y - 1);
+            sizeOfRegion(x + 1, y);
+            sizeOfRegion(x + 1, y + 1);
         }
 
-        return points.size();
     }
 
     public static class Point{
@@ -64,10 +65,12 @@ public class Solution {
 
     public static int getBiggestRegion() {
         int size;
-        for (int xc = 0; xc < m;  xc++){
+        for (int yc = 0; yc < n;  yc++){
 
-            for (int yc = 0; yc < n; yc++){
-                size = sizeOfRegion(xc, yc, new HashSet<Point>());
+            for (int xc = 0; xc < m; xc++){
+                points = new HashSet<Point>();
+                sizeOfRegion(xc, yc);
+                size = points.size();
                 if (size > sizeOfRegion) sizeOfRegion = size;
 
             }
@@ -78,8 +81,8 @@ public class Solution {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int m = in.nextInt();
+        n = in.nextInt();
+        m = in.nextInt();
         int grid[][] = new int[n][m];
         for(int grid_i=0; grid_i < n; grid_i++){
             for(int grid_j=0; grid_j < m; grid_j++){
