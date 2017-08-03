@@ -5,17 +5,49 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class Solution {
+    static int m;
+    static int n;
+    static int sizeOfRegion = 0;
+    static int[][] matrix;
 
-    public static class point{
+    public static int sizeOfRegion(int x, int y, HashSet<Point> points){
+        if (x < 0|| x >= m || y < 0 || y >= n){
+            return 0;
+        }
+        if (points.contains(new Point (x, y))){
+            return 0;
+        }
+        if (matrix[x][y] != 0){
+            points.add(new Point(x, y));
+
+            sizeOfRegion(x, y - 1, points);
+            sizeOfRegion(x, y + 1, points);
+            sizeOfRegion(x - 1, y - 1, points);
+            sizeOfRegion(x - 1, y, points);
+            sizeOfRegion(x - 1, y + 1, points);
+            sizeOfRegion(x + 1, y - 1, points);
+            sizeOfRegion(x + 1, y, points);
+            sizeOfRegion(x + 1, y + 1, points);
+        }
+
+        return points.size();
+    }
+
+    public static class Point{
         int x;
         int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            point point = (point) o;
+            Point point = (Point) o;
 
             if (x != point.x) return false;
             return y == point.y;
@@ -30,13 +62,18 @@ public class Solution {
     }
 
 
-    public static int sizeOfRegion(int x, int y, HashSet){
+    public static int getBiggestRegion() {
+        int size;
+        for (int xc = 0; xc < m;  xc++){
 
-    }
-    
+            for (int yc = 0; yc < n; yc++){
+                size = sizeOfRegion(xc, yc, new HashSet<Point>());
+                if (size > sizeOfRegion) sizeOfRegion = size;
 
-    public static int getBiggestRegion(int[][] matrix) {
+            }
 
+        }
+        return sizeOfRegion;
     }
 
     public static void main(String[] args) {
@@ -49,6 +86,7 @@ public class Solution {
                 grid[grid_i][grid_j] = in.nextInt();
             }
         }
-        System.out.println(getBiggestRegion(grid));
+        matrix = grid;
+        System.out.println(getBiggestRegion());
     }
 }
