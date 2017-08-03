@@ -28,19 +28,24 @@ public class Solution {
 
         public int[] shortestReach(int startingNode) {
             int [] distances = new int [size];
+
+            Arrays.fill(distances, -1);
+
             Queue<Integer> que = new LinkedList<>();
 
             que.add(startingNode);
+            distances[startingNode] = 0;
 
             HashSet<Integer> visited = new HashSet<>();
 
             visited.add(startingNode);
 
-            while (que.isEmpty()) {
+            while (!que.isEmpty()) {
                 Integer currentNode = que.poll();
                 for (int node : neighbours.get(currentNode)){
                     if (!visited.contains(node)){
                         que.add(node);
+                        visited.contains(node);
                         distances[node] = distances[currentNode] + 6;
                     }
                 }
