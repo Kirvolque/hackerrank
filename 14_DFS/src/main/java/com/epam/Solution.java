@@ -68,14 +68,15 @@ public class Solution {
         for (int yc = 0; yc < n;  yc++){
 
             for (int xc = 0; xc < m; xc++){
-                points = new HashSet<Point>();
-                sizeOfRegion(xc, yc);
-                size = points.size();
-                if (size > sizeOfRegion) sizeOfRegion = size;
-
+                if (matrix[yc][xc] != 0){
+                    points = new HashSet<Point>();
+                    sizeOfRegion(xc, yc);
+                    size = points.size();
+                    if (size > sizeOfRegion) sizeOfRegion = size;
+                }
             }
-
         }
+
         return sizeOfRegion;
     }
 
