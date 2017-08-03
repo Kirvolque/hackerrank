@@ -1,10 +1,7 @@
 package com.epam;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
 
 
 public class Solution {
@@ -20,7 +17,7 @@ public class Solution {
             this.size = size;
 
             while (size-- > 0)
-                neighbours.add(new ArrayList<>());
+                neighbours.add(new ArrayList<Integer>());
         }
 
         public void addEdge(int first, int second) {
@@ -28,6 +25,31 @@ public class Solution {
             neighbours.get(second).add(first);
 
         }
+
+        public int[] shortestReach(int startingNode) {
+            int [] distances = new int [size];
+            Queue<Integer> que = new LinkedList<>();
+
+            que.add(startingNode);
+
+            HashSet<Integer> visited = new HashSet<>();
+
+            visited.add(startingNode);
+
+            while (que.isEmpty()) {
+                Integer currentNode = que.poll();
+                for (int node : neighbours.get(currentNode)){
+                    if (!visited.contains(node)){
+                        que.add(node);
+                        distances[node] = distances[currentNode] + 6;
+                    }
+                }
+
+            }
+            return distances;
+
+        }
+
     }
 
 
